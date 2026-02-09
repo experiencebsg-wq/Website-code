@@ -7,7 +7,7 @@ interface FloatingWhatsAppProps {
 }
 
 export function FloatingWhatsApp({
-  phoneNumber = '+2348000000000', // Replace with actual support number
+  phoneNumber = '+2348024445979',
   message = 'Hello! I have a question about BSG Fragrance.',
 }: FloatingWhatsAppProps) {
   const handleClick = () => {

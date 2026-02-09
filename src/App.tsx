@@ -44,7 +44,7 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <FloatingWhatsApp phoneNumber="+2348000000000" />
+            <FloatingWhatsApp phoneNumber="+2348024445979" />
           </BrowserRouter>
         </TooltipProvider>
       </CartProvider>

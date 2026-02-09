@@ -20,7 +20,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+234 800 000 0000', '+234 900 000 0000'],
+    details: ['+234 802 444 5979'],
   },
   {
     icon: Mail,
