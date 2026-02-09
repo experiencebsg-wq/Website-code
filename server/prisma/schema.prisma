@@ -1,0 +1,86 @@
+// BSG Fragrance E-Commerce - Database Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String
+  shortDescription String
+  price           Int      // NGN in kobo or smallest unit - we store as Naira
+  priceUSD        Int      // USD cents - we store as dollars * 100 for precision, or just dollars
+  currency        String   @default("NGN")
+  category        String   // body-fragrance-male | body-fragrance-female | home-fragrance
+  subcategory     String?
+  images          String   // JSON array of image URLs
+  inStock         Boolean  @default(true)
+  stockQuantity   Int      @default(0)
+  sizes           String?  // JSON array of { size, price, priceUSD }
+  notes           String?  // JSON { top, middle, base }
+  featured        Boolean  @default(false)
+  new             Boolean  @default(false)
+  comingSoon      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id                String   @id @default(cuid())
+  orderId           String   @unique // e.g. ORD-XXXXX
+  email             String
+  phone             String
+  whatsapp          String
+  shipping          String   // JSON: { firstName, lastName, address, city, state, country, postalCode }
+  notes             String?
+  paymentReference  String?
+  status            String   @default("pending") // pending | paid | processing | shipped | delivered | cancelled
+  totalNGN          Int
+  totalUSD          Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  orderItems        OrderItem[]
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  quantity    Int
+  size        String?
+  priceNGN    Int
+  priceUSD    Int
+  createdAt   DateTime @default(now())
+
+  @@unique([orderId, productId, size])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
