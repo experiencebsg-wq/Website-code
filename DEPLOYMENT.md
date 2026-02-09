@@ -53,9 +53,10 @@ Use this checklist and fill in your details as you go. Pushing to your connected
    - **Name:** e.g. `aura-fragrance-api`
    - **Root Directory:** `server`
    - **Runtime:** Node
-   - **Build Command:**  
-     `npm install && npx prisma generate && npm run build && npx prisma db push`
+   - **Install Command:** `npm install --include=dev` (so TypeScript and @types are installed)
+   - **Build Command:** `npx prisma generate && npm run build && npx prisma db push`
    - **Start Command:** `npm start`
+   - **Important:** You must have both Install and Build commands. If you only run Install, `dist/` is never created and the app will crash on start.
 
 4. **Environment variables** (Add all):
 

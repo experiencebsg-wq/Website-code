@@ -45,6 +45,7 @@ interface ProductRow {
   stockQuantity: number;
   featured: boolean;
   new: boolean;
+  comingSoon?: boolean;
   images?: string[];
   sizes?: SizeOption[];
 }
