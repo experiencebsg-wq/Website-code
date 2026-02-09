@@ -134,7 +134,7 @@ router.post('/', async (req: Request, res: Response) => {
     email = email.trim().toLowerCase();
     subject = subject.trim();
     message = message.trim();
-    phone = phone?.trim() || null;
+    phone = phone?.trim() ?? undefined;
 
     if (!isValidEmail(email)) {
       res.status(400).json({ error: 'Please enter a valid email address.' });
@@ -149,7 +149,7 @@ router.post('/', async (req: Request, res: Response) => {
 
     if (resend) {
       // 1. Send to company (experienceBSG@gmail.com)
-      const companyHtml = companyEmailHtml(name, email, phone, subject, message);
+      const companyHtml = companyEmailHtml(name, email, phone ?? null, subject, message);
       const { error: err1 } = await resend.emails.send({
         from,
         to: [CONTACT_EMAIL_TO],
