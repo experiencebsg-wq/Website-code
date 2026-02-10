@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Bell, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -35,6 +36,7 @@ const comingSoonServices = [
 export default function ComingSoon() {
   return (
     <Layout>
+      <SEO title="Coming Soon" description="New services from BSG Beelicious Signatures Global – food, catering, makeup and beauty. Stay tuned." path="/coming-soon" />
       {/* Hero */}
       <section className="pt-32 pb-16 bg-navy-gradient">
         <div className="container-luxury text-center">

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Minus, Plus, ShoppingBag, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { fetchProductById, Product, getProductImageUrl } from '@/services/api';
 import { useCart } from '@/contexts/CartContext';
@@ -65,6 +66,7 @@ export default function ProductDetail() {
   if (isLoading) {
     return (
       <Layout>
+        <SEO title="Product" description="Loading product details." path="/shop" />
         <div className="pt-32 pb-16">
           <div className="container-luxury">
             <div className="grid lg:grid-cols-2 gap-12 animate-pulse">
@@ -85,6 +87,7 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <Layout>
+        <SEO title="Product Not Found" description="The product you're looking for doesn't exist." path="/shop" noIndex />
         <div className="pt-32 pb-16">
           <div className="container-luxury text-center">
             <h1 className="text-display-md text-foreground mb-4">Product Not Found</h1>
@@ -104,6 +107,12 @@ export default function ProductDetail() {
 
   return (
     <Layout>
+      <SEO
+        title={product.name}
+        description={product.shortDescription || product.description?.slice(0, 160) || `Buy ${product.name} – luxury fragrance from BSG.`}
+        path={`/product/${product.slug}`}
+        image={product.images?.[0] ? (product.images[0].startsWith('/') ? product.images[0] : undefined) : undefined}
+      />
       <section className="pt-32 pb-16">
         <div className="container-luxury">
           {/* Breadcrumb */}

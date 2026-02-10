@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { ProductGrid } from '@/components/products';
 import { fetchProducts, Product } from '@/services/api';
 import { Button } from '@/components/ui/button';
@@ -218,6 +219,11 @@ export default function Shop() {
 
   return (
     <Layout>
+      <SEO
+        title="Shop All Fragrances"
+        description="Browse luxury perfumes, colognes, scented candles and diffusers. Filter by category, price and availability. Free delivery in Nigeria."
+        path="/shop"
+      />
       {/* Hero */}
       <section className="pt-32 pb-16 bg-navy-gradient">
         <div className="container-luxury text-center">

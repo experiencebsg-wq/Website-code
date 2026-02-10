@@ -2,6 +2,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 
 export default function OrderSuccess() {
@@ -10,6 +11,7 @@ export default function OrderSuccess() {
 
   return (
     <Layout>
+      <SEO title="Order Confirmed" description="Thank you for your order." path="/order-success" noIndex />
       <section className="pt-32 pb-16 min-h-[70vh] flex items-center">
         <div className="container-luxury">
           <motion.div

@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (
     <Layout>
+      <SEO title="Page Not Found" description="The page you're looking for doesn't exist." path="/404" noIndex />
       <section className="pt-32 pb-16 min-h-[70vh] flex items-center">
         <div className="container-luxury text-center">
           <motion.div

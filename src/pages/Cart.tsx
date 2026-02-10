@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Trash2, Minus, Plus, ShoppingBag, ArrowRight } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
@@ -23,6 +24,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <Layout>
+        <SEO title="Your Cart" description="View your cart. Add luxury fragrances from BSG and proceed to checkout." path="/cart" />
         <section className="pt-32 pb-16 min-h-[70vh] flex items-center">
           <div className="container-luxury text-center">
             <motion.div
@@ -53,6 +55,7 @@ export default function Cart() {
 
   return (
     <Layout>
+      <SEO title="Your Cart" description="View your cart. Add luxury fragrances from BSG and proceed to checkout." path="/cart" />
       <section className="pt-32 pb-16">
         <div className="container-luxury">
           <motion.div

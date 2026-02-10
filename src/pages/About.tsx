@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Gem, Heart, Award, Globe } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/logo.png';
@@ -36,6 +37,11 @@ const values = [
 export default function About() {
   return (
     <Layout>
+      <SEO
+        title="About Us"
+        description="BSG Beelicious Signatures Global – our story, values and commitment to luxury fragrances. Premium perfumes, colognes and home scents in Nigeria and worldwide."
+        path="/about"
+      />
       {/* Hero */}
       <section className="pt-32 pb-16 bg-navy-gradient">
         <div className="container-luxury text-center">

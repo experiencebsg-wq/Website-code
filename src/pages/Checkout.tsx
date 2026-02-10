@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -135,6 +136,7 @@ export default function Checkout() {
 
   return (
     <Layout>
+      <SEO title="Checkout" description="Complete your order. Secure payment with Paystack." path="/checkout" noIndex />
       <section className="pt-32 pb-16">
         <div className="container-luxury">
           <motion.div

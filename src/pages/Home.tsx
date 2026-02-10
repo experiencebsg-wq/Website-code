@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { ProductGrid } from '@/components/products';
 import { fetchFeaturedProducts, Product } from '@/services/api';
 import heroVideo from '@/assets/hero-video.mp4';
@@ -34,6 +35,11 @@ export default function Home() {
 
   return (
     <Layout>
+      <SEO
+        title="Luxury Fragrances &amp; Home Scents"
+        description="Discover premium perfumes, colognes, scented candles and diffusers. BSG Beelicious Signatures Global – luxury fragrances in Nigeria and worldwide."
+        path="/"
+      />
       {/* Hero Section with Video */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Twitter } from 'lucide-react';
 import { Layout } from '@/components/layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -95,6 +96,11 @@ export default function Contact() {
 
   return (
     <Layout>
+      <SEO
+        title="Contact Us"
+        description="Get in touch with BSG Beelicious Signatures Global. Lagos, Nigeria. Call +234 802 444 5979 or send a message. We're here to help."
+        path="/contact"
+      />
       {/* Hero */}
       <section className="pt-32 pb-16 bg-navy-gradient">
         <div className="container-luxury text-center">
