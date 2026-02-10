@@ -56,6 +56,9 @@ export const adminApi = {
     markRead: (id: string) =>
       request<unknown>(`/admin/contacts/${id}/read`, { method: 'PATCH' }),
   },
+  newsletter: {
+    list: () => request<unknown[]>('/admin/newsletter'),
+  },
   upload: async (file: File): Promise<{ url: string }> => {
     const token = getToken();
     const form = new FormData();

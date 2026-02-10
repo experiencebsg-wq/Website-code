@@ -13,6 +13,7 @@ import authRouter from './routes/auth.js';
 import adminProductsRouter from './routes/admin/products.js';
 import adminOrdersRouter from './routes/admin/orders.js';
 import adminContactsRouter from './routes/admin/contacts.js';
+import adminNewsletterRouter from './routes/admin/newsletter.js';
 import adminUploadRouter from './routes/admin/upload.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -54,6 +55,7 @@ app.use('/auth', authRouter);
 app.use('/admin/products', adminProductsRouter);
 app.use('/admin/orders', adminOrdersRouter);
 app.use('/admin/contacts', adminContactsRouter);
+app.use('/admin/newsletter', adminNewsletterRouter);
 app.use('/admin/upload', adminUploadRouter);
 
 // Health check

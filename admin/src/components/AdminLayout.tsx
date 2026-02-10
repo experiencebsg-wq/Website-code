@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Package, ShoppingBag, Mail, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Mail, Users, LogOut } from 'lucide-react';
 
 export default function AdminLayout() {
   const { email, logout } = useAdminAuth();
@@ -17,6 +17,7 @@ export default function AdminLayout() {
     { to: '/products', label: 'Products', icon: Package },
     { to: '/orders', label: 'Orders', icon: ShoppingBag },
     { to: '/contacts', label: 'Contacts', icon: Mail },
+    { to: '/newsletter', label: 'Mailing list', icon: Users },
   ];
 
   return (

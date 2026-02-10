@@ -7,6 +7,7 @@ import AdminProducts from './pages/AdminProducts';
 import AdminOrders from './pages/AdminOrders';
 import AdminOrderDetail from './pages/AdminOrderDetail';
 import AdminContacts from './pages/AdminContacts';
+import AdminNewsletter from './pages/AdminNewsletter';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="orders" element={<AdminOrders />} />
         <Route path="orders/:id" element={<AdminOrderDetail />} />
         <Route path="contacts" element={<AdminContacts />} />
+        <Route path="newsletter" element={<AdminNewsletter />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
