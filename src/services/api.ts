@@ -4,11 +4,11 @@ import axios from 'axios';
 // Strip whitespace and trailing slash so requests work correctly
 const API_BASE_URL = (String(import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/+$/, '') || '');
 
-/** Resolve product image URL: backend uploads are relative (/uploads/...) and must use API origin */
+/** Resolve product image URL: only /uploads/ comes from the API; /assets/ is served from the frontend (same origin) */
 export function getProductImageUrl(imagePath: string): string {
   if (!imagePath) return '/placeholder.svg';
   if (imagePath.startsWith('http')) return imagePath;
-  if (imagePath.startsWith('/') && API_BASE_URL) return API_BASE_URL + imagePath;
+  if (imagePath.startsWith('/uploads/') && API_BASE_URL) return API_BASE_URL + imagePath;
   return imagePath;
 }
 
