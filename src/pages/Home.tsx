@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Layout } from '@/components/layout';
 import { SEO } from '@/components/SEO';
 import { ProductGrid } from '@/components/products';
-import { fetchFeaturedProducts, Product } from '@/services/api';
+import { fetchFeaturedProducts, Product, subscribeNewsletter } from '@/services/api';
 import heroVideo from '@/assets/hero-video.mp4';
 import logo from '@/assets/logo.png';
 import ingredientsImg from '@/assets/fragrance-ingredients.jpg';
@@ -17,6 +17,11 @@ export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
+
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+  const [newsletterSuccess, setNewsletterSuccess] = useState<string | null>(null);
+  const [newsletterError, setNewsletterError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -395,16 +400,51 @@ export default function Home() {
             <p className="text-muted-foreground mb-8">
               Be the first to know about new arrivals, exclusive offers, and the latest from our world.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 h-12 px-4 bg-muted border border-border rounded-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold transition-colors"
-              />
-              <Button variant="gold" size="lg">
-                Subscribe
-              </Button>
-            </div>
+            {newsletterSuccess ? (
+              <p className="text-gold font-medium">{newsletterSuccess}</p>
+            ) : (
+              <form
+                className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setNewsletterError(null);
+                  if (!newsletterEmail.trim()) {
+                    setNewsletterError('Please enter your email.');
+                    return;
+                  }
+                  setNewsletterLoading(true);
+                  try {
+                    const res = await subscribeNewsletter(newsletterEmail.trim());
+                    if (res.success) {
+                      setNewsletterSuccess(res.message ?? "You're in! We'll keep you updated.");
+                      setNewsletterEmail('');
+                    } else {
+                      setNewsletterError(res.error ?? 'Something went wrong. Please try again.');
+                    }
+                  } catch {
+                    setNewsletterError('Something went wrong. Please try again.');
+                  } finally {
+                    setNewsletterLoading(false);
+                  }
+                }}
+              >
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  disabled={newsletterLoading}
+                  className="flex-1 h-12 px-4 bg-muted border border-border rounded-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold transition-colors disabled:opacity-70"
+                  aria-label="Email for newsletter"
+                />
+                <Button type="submit" variant="gold" size="lg" disabled={newsletterLoading}>
+                  {newsletterLoading ? 'Subscribing…' : 'Subscribe'}
+                </Button>
+              </form>
+            )}
+            {newsletterError && (
+              <p className="mt-3 text-sm text-destructive max-w-md mx-auto">{newsletterError}</p>
+            )}
           </motion.div>
         </div>
       </section>

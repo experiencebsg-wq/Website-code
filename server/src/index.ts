@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import productsRouter from './routes/products.js';
 import ordersRouter from './routes/orders.js';
 import contactRouter from './routes/contact.js';
+import newsletterRouter from './routes/newsletter.js';
 import paymentsRouter from './routes/payments.js';
 import authRouter from './routes/auth.js';
 import adminProductsRouter from './routes/admin/products.js';
@@ -45,6 +46,7 @@ app.use('/uploads', express.static(uploadsDir));
 app.use('/products', productsRouter);
 app.use('/checkout', ordersRouter);
 app.use('/contact', contactRouter);
+app.use('/newsletter', newsletterRouter);
 app.use('/payments', paymentsRouter);
 app.use('/auth', authRouter);
 

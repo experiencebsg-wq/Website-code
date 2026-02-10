@@ -206,6 +206,18 @@ export const submitContactForm = async (data: ContactFormData): Promise<{ succes
   }
 };
 
+// Newsletter
+export const subscribeNewsletter = async (email: string): Promise<{ success: boolean; message?: string; error?: string }> => {
+  try {
+    const response = await api.post('/newsletter', { email });
+    return response.data;
+  } catch (err: unknown) {
+    const data = (err as { response?: { data?: { error?: string } } })?.response?.data;
+    const msg = data?.error ?? 'Something went wrong. Please try again.';
+    return { success: false, error: msg };
+  }
+};
+
 // Product image imports - used for mock data
 const productImages: Record<string, string> = {
   'midnight-velvet': '/assets/products/midnight-velvet.jpg',
