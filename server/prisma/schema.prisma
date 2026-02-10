@@ -27,6 +27,7 @@ model Product {
   featured        Boolean  @default(false)
   new             Boolean  @default(false)
   comingSoon      Boolean  @default(false)
+  weightGrams     Int?     // For logistics/shipping (optional)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 

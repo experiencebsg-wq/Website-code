@@ -25,6 +25,7 @@ function toProduct(p: {
   featured: boolean;
   new: boolean;
   comingSoon: boolean;
+  weightGrams: number | null;
   createdAt: Date;
 }) {
   return {
@@ -46,6 +47,7 @@ function toProduct(p: {
     featured: p.featured,
     new: p.new,
     comingSoon: p.comingSoon,
+    weightGrams: p.weightGrams ?? undefined,
     createdAt: p.createdAt.toISOString().slice(0, 10),
   };
 }
@@ -82,6 +84,7 @@ router.post('/', async (req: Request, res: Response) => {
       featured?: boolean;
       new?: boolean;
       comingSoon?: boolean;
+      weightGrams?: number | null;
     };
     const slug = body.slug || body.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const product = await prisma.product.create({
@@ -103,6 +106,7 @@ router.post('/', async (req: Request, res: Response) => {
         featured: body.featured ?? false,
         new: body.new ?? false,
         comingSoon: body.comingSoon ?? false,
+        weightGrams: body.weightGrams ?? null,
       },
     });
     res.status(201).json(toProduct(product));
@@ -134,6 +138,7 @@ router.put('/:id', async (req: Request, res: Response) => {
       featured: boolean;
       new: boolean;
       comingSoon: boolean;
+      weightGrams: number | null;
     }>;
     const data: Record<string, unknown> = {};
     if (body.name != null) data.name = body.name;
@@ -153,6 +158,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     if (body.featured != null) data.featured = body.featured;
     if (body.new != null) data.new = body.new;
     if (body.comingSoon != null) data.comingSoon = body.comingSoon;
+    if (body.weightGrams !== undefined) data.weightGrams = body.weightGrams;
 
     const product = await prisma.product.update({
       where: { id },

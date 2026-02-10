@@ -77,6 +77,7 @@ async function main() {
         notes: p.notes ? JSON.stringify(p.notes) : null,
         featured: p.featured,
         new: p.new,
+        weightGrams: null,
       },
       update: {
         name: p.name,
@@ -93,6 +94,7 @@ async function main() {
         notes: p.notes ? JSON.stringify(p.notes) : null,
         featured: p.featured,
         new: p.new,
+        weightGrams: null,
       },
     });
   }

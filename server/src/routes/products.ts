@@ -23,6 +23,7 @@ function toProduct(p: {
   featured: boolean;
   new: boolean;
   comingSoon: boolean;
+  weightGrams: number | null;
   createdAt: Date;
 }) {
   return {
@@ -44,6 +45,7 @@ function toProduct(p: {
     featured: p.featured,
     new: p.new,
     comingSoon: p.comingSoon,
+    weightGrams: p.weightGrams ?? undefined,
     createdAt: p.createdAt.toISOString().slice(0, 10),
   };
 }

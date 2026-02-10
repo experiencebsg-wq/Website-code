@@ -46,6 +46,7 @@ interface ProductRow {
   featured: boolean;
   new: boolean;
   comingSoon?: boolean;
+  weightGrams?: number | null;
   images?: string[];
   sizes?: SizeOption[];
 }
@@ -69,6 +70,7 @@ export default function AdminProducts() {
     featured: false,
     new: false,
     comingSoon: false,
+    weightGrams: '' as string,
     images: '[]',
     sizes: [] as { size: string; price: string; priceUSD: string }[],
   });
@@ -105,6 +107,7 @@ export default function AdminProducts() {
       featured: false,
       new: false,
       comingSoon: false,
+      weightGrams: '',
       images: '[]',
       sizes: [],
     });
@@ -127,6 +130,7 @@ export default function AdminProducts() {
       featured: p.featured,
       new: p.new,
       comingSoon: p.comingSoon ?? false,
+      weightGrams: p.weightGrams != null ? String(p.weightGrams) : '',
       images: JSON.stringify(Array.isArray(p.images) ? p.images : []),
       sizes: (p.sizes ?? []).map((s) => ({
         size: s.size,
@@ -185,6 +189,7 @@ export default function AdminProducts() {
         featured: form.featured,
         new: form.new,
         comingSoon: form.comingSoon,
+        weightGrams: form.weightGrams.trim() === '' ? null : Number(form.weightGrams) || null,
       };
       if (editingId) {
         await adminApi.products.update(editingId, payload);
@@ -272,6 +277,7 @@ export default function AdminProducts() {
                 <TableHead>Category</TableHead>
                 <TableHead className="text-right">Price (NGN)</TableHead>
                 <TableHead className="text-right">Stock</TableHead>
+                <TableHead className="text-right">Weight (g)</TableHead>
                 <TableHead className="w-24">Featured</TableHead>
                 <TableHead className="w-24">New</TableHead>
                 <TableHead className="w-24">Coming Soon</TableHead>
@@ -286,6 +292,7 @@ export default function AdminProducts() {
                   <TableCell>{p.category}</TableCell>
                   <TableCell className="text-right">₦{p.price?.toLocaleString()}</TableCell>
                   <TableCell className="text-right">{p.stockQuantity}</TableCell>
+                  <TableCell className="text-right">{p.weightGrams != null ? p.weightGrams : '—'}</TableCell>
                   <TableCell>{p.featured ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{p.new ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{p.comingSoon ? 'Yes' : 'No'}</TableCell>
@@ -376,6 +383,20 @@ export default function AdminProducts() {
                   onChange={(e) => setForm((f) => ({ ...f, stockQuantity: e.target.value }))}
                 />
               </div>
+            </div>
+            <div>
+              <Label>Weight (grams)</Label>
+              <Input
+                type="number"
+                min={0}
+                step={1}
+                placeholder="e.g. 150"
+                value={form.weightGrams}
+                onChange={(e) => setForm((f) => ({ ...f, weightGrams: e.target.value }))}
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                For logistics and shipping. Optional; used when calculating shipping weight later.
+              </p>
             </div>
             {form.category === 'home-fragrance' && (
               <div>

@@ -117,10 +117,10 @@ Use this checklist and fill in your details as you go. Pushing to your connected
 ## Part 5 – Wire CORS (after both Vercel URLs exist)
 
 1. In **Render** → your API service → **Environment**.
-2. Set `FRONTEND_URL` to:  
-   `https://YOUR_STOREFRONT.vercel.app,https://YOUR_ADMIN.vercel.app`  
-   (exact URLs from the table above, comma-separated, no spaces).
-3. Save. Render will redeploy.
+2. Set `FRONTEND_URL` to your **storefront** and **admin** origins, comma-separated, no spaces, e.g.:  
+   `https://www.experiencebsg.com,https://admin.experiencebsg.com`  
+   (If you use Vercel URLs instead of custom domains: `https://YOUR_STOREFRONT.vercel.app,https://YOUR_ADMIN.vercel.app`.)
+3. Save. Render will redeploy. The admin at **admin.experiencebsg.com** must be listed here for CORS.
 
 ---
 

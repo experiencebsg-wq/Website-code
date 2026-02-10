@@ -62,6 +62,7 @@ export interface Product {
   featured?: boolean;
   new?: boolean;
   comingSoon?: boolean;
+  weightGrams?: number;
   createdAt: string;
 }
 
