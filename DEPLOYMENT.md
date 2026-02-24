@@ -141,6 +141,62 @@ No need to redeploy manually unless you change env vars.
 
 ---
 
+## Migrating database from Render to another provider
+
+If your Render **free** PostgreSQL is expiring, you can move to a free PostgreSQL host (e.g. **Neon**) and only change `DATABASE_URL`. No code changes are required.
+
+### 1. Export data from Render
+
+1. In **Render** → your PostgreSQL service (**website-code-db**) → **Connect** → copy the **External Database URL** (not Internal). It looks like:
+   `postgres://user:password@host/database?sslmode=require`
+2. On your machine (PowerShell or Git Bash), install [PostgreSQL client tools](https://www.postgresql.org/download/) if needed, then run (replace `YOUR_RENDER_EXTERNAL_URL` with the URL from step 1):
+   ```bash
+   cd server
+   set PGPASSWORD=your_password
+   pg_dump "YOUR_RENDER_EXTERNAL_URL" --no-owner --no-acl -F c -f render_backup.dump
+   ```
+   Or with connection string in one go:
+   ```bash
+   pg_dump "postgres://user:pass@host/db?sslmode=require" --no-owner --no-acl -F c -f render_backup.dump
+   ```
+   If `pg_dump` is not in PATH, use the full path (e.g. `"C:\Program Files\PostgreSQL\16\bin\pg_dump.exe"`).
+
+### 2. Create a new database on Neon (free)
+
+1. Sign up at https://neon.tech and create a new project.
+2. Create a database if needed (Neon gives you one by default). Copy the **connection string** (Pooled or Direct). It looks like:
+   `postgresql://user:password@ep-xxx.region.aws.neon.tech/neondb?sslmode=require`
+
+### 3. Import data into Neon
+
+From the same folder where you have `render_backup.dump` (or use the full path to the file):
+
+```bash
+pg_restore -d "YOUR_NEON_CONNECTION_STRING" --no-owner --no-acl render_backup.dump
+```
+
+If you get role errors, you can ignore them as long as tables and data are created. To be safe, create the schema with Prisma first, then restore only data (optional; for a full dump, restore is usually enough).
+
+### 4. Point the API to the new database
+
+- **Render (API service):** Dashboard → your **Web Service** (API) → **Environment** → edit `DATABASE_URL` and set it to your **Neon connection string**. Save. Render will redeploy and use the new DB.
+- **Local:** If you use `server/.env` for local dev, set `DATABASE_URL` there to a separate DB (e.g. another Neon DB or the same one) so local work doesn’t affect production.
+
+### 5. Verify and clean up
+
+1. Open your storefront and admin; place a test order or subscribe to the newsletter, then check in the new provider’s UI (or admin panel) that data appears.
+2. After you’re satisfied, you can delete the **Render PostgreSQL** service (**website-code-db**) so it’s not billed or suspended.
+
+**Where `DATABASE_URL` is used**
+
+| Place | What to do |
+|-------|------------|
+| **Render Web Service (API)** | Environment → `DATABASE_URL` = Neon (or other provider) connection string. |
+| **Local `server/.env`** | Optional; use a separate DB URL for development. |
+| **Code** | No change. Only `server/prisma/schema.prisma` reads `env("DATABASE_URL")`. |
+
+---
+
 ## Local development after deployment
 
 - **Database:** Use a separate PostgreSQL (e.g. [Neon](https://neon.tech) free) for local dev so you don’t touch production. Put that URL in `server/.env` as `DATABASE_URL`.

@@ -33,3 +33,4 @@ server/.env.*
 
 # Server uploads (product images)
 server/uploads
+server/render_backup.dump
