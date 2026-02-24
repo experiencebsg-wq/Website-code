@@ -45,31 +45,44 @@ export default function Home() {
         description="Discover premium perfumes, colognes, scented candles and diffusers. BSG Beelicious Signatures Global – luxury fragrances in Nigeria and worldwide."
         path="/"
       />
-      {/* Hero Section with Video */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 z-0">
+      {/* Hero: Video first (full viewport) */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover"
-            style={{ 
-              aspectRatio: '16/9',
-            }}
+            className="absolute inset-0 w-full h-full object-cover"
           >
             <source src={heroVideo} type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80" />
         </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+        >
+          <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center pt-2">
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 bg-gold rounded-full"
+            />
+          </div>
+        </motion.div>
+      </section>
 
-        {/* Hero Content */}
-        <div className="relative z-10 container-luxury text-center pt-20">
+      {/* Hero copy below video */}
+      <section className="relative section-padding bg-background">
+        <div className="container-luxury text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true, margin: "-50px" }}
             className="max-w-4xl mx-auto"
           >
             <p className="text-sm uppercase tracking-luxury-wide text-gold mb-6">
@@ -80,7 +93,7 @@ export default function Home() {
               <span className="block text-gold-gradient">Luxury Fragrance</span>
             </h1>
             <p className="text-body-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Discover exquisite scents crafted for those who appreciate the finer things in life. 
+              Discover exquisite scents crafted for those who appreciate the finer things in life.
               Each fragrance tells a unique story of elegance and sophistication.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -98,22 +111,6 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
-        >
-          <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center pt-2">
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-gold rounded-full"
-            />
-          </div>
-        </motion.div>
       </section>
 
       {/* Brand Story Teaser */}
