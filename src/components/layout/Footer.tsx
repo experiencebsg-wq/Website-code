@@ -183,6 +183,19 @@ export function Footer() {
             experienceBSG.com · Your Customized Experience
           </p>
         </div>
+        <div className="container-luxury pb-6 text-center">
+          <p className="text-xs text-muted-foreground/80">
+            Website designed & developed by{' '}
+            <a
+              href="https://elevatewebandmarketing.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold hover:text-gold/90 transition-colors"
+            >
+              Elevate Web & Marketing
+            </a>
+          </p>
+        </div>
       </motion.div>
     </footer>
   );
