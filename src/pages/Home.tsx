@@ -53,7 +53,7 @@ export default function Home() {
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-contain object-center md:object-cover"
+            className="absolute inset-0 w-full h-full object-contain object-center 2xl:object-cover"
           >
             <source src={heroVideo} type="video/mp4" />
           </video>
