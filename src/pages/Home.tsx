@@ -47,13 +47,13 @@ export default function Home() {
       />
       {/* Hero: Video first (full viewport) */}
       <section className="relative h-screen w-full overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-black">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-contain object-center md:object-cover"
           >
             <source src={heroVideo} type="video/mp4" />
           </video>
