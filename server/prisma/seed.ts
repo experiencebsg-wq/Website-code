@@ -47,13 +47,21 @@ const mockProducts = [
 ];
 
 async function main() {
-  const hash = await bcrypt.hash('admin123', 10);
+  // Admin credentials must come from the environment — never hardcode them.
+  const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@bsgfragrance.com';
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  if (!adminPassword || adminPassword.length < 10) {
+    throw new Error(
+      'SEED_ADMIN_PASSWORD env var is required (min 10 chars) to seed the admin user.'
+    );
+  }
+  const hash = await bcrypt.hash(adminPassword, 10);
   await prisma.adminUser.upsert({
-    where: { email: 'admin@bsgfragrance.com' },
-    create: { email: 'admin@bsgfragrance.com', passwordHash: hash },
+    where: { email: adminEmail },
+    create: { email: adminEmail, passwordHash: hash },
     update: { passwordHash: hash },
   });
-  console.log('Admin user created: admin@bsgfragrance.com / admin123');
+  console.log('Admin user seeded:', adminEmail, '(password set from SEED_ADMIN_PASSWORD)');
 
   for (const p of mockProducts) {
     const images = (p.images as string[]).map((key) => productImages[key] || `/assets/products/${key}.jpg`);

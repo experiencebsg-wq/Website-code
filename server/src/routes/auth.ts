@@ -3,9 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma.js';
 import { requireAdmin } from '../middleware/auth.js';
+import { JWT_SECRET } from '../lib/config.js';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
 
 // POST /auth/login - admin login
 router.post('/login', async (req: Request, res: Response) => {

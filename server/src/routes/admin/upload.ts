@@ -14,13 +14,23 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+// Allowed raster image types only. SVG is intentionally excluded — it can carry
+// script and would become stored XSS when served from /uploads.
+const MIME_TO_EXT: Record<string, string> = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/webp': '.webp',
+  'image/gif': '.gif',
+};
+
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => cb(null, uploadsDir),
   filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname) || '.jpg';
-    const base = path.basename(file.originalname, ext).replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
-    const name = base || 'image';
-    cb(null, `${name}-${Date.now()}${ext}`);
+    // Derive the extension from the (validated) mimetype, not the client filename.
+    const ext = MIME_TO_EXT[file.mimetype.toLowerCase()] || '.jpg';
+    const rawBase = path.basename(file.originalname, path.extname(file.originalname));
+    const base = rawBase.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '') || 'image';
+    cb(null, `${base}-${Date.now()}${ext}`);
   },
 });
 
@@ -28,8 +38,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
-    const allowed = /^image\/(jpe?g|png|webp|gif)$/i.test(file.mimetype);
-    if (allowed) cb(null, true);
+    if (MIME_TO_EXT[file.mimetype.toLowerCase()]) cb(null, true);
     else cb(new Error('Only images (JPEG, PNG, WebP, GIF) are allowed'));
   },
 });
