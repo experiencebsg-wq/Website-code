@@ -15,6 +15,7 @@ import adminOrdersRouter from './routes/admin/orders.js';
 import adminContactsRouter from './routes/admin/contacts.js';
 import adminNewsletterRouter from './routes/admin/newsletter.js';
 import adminUploadRouter from './routes/admin/upload.js';
+import { ensureAdminUser } from './lib/ensureAdmin.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3001;
@@ -60,6 +61,9 @@ app.use('/admin/upload', adminUploadRouter);
 
 // Health check
 app.get('/health', (_req, res) => res.json({ ok: true }));
+
+// Sync the admin account from env on boot (set/rotate via SEED_ADMIN_PASSWORD). Non-fatal.
+ensureAdminUser().catch((e) => console.error('[ensureAdmin] failed:', e));
 
 app.listen(PORT, () => {
   console.log(`BSG API running at http://localhost:${PORT}`);
